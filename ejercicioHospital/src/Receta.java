@@ -8,14 +8,15 @@ public class Receta {
     private List<Estudio> estudios;
     private String estado;
 
-    public Receta (int id, Profesional profesional, Paciente paciente, Estudio[] estudio){
+    public Receta(int id, Profesional profesional, Paciente paciente, Estudio[] estudios) {
         this.id = id;
         this.profesional = profesional;
-        this.paciente = paciente; 
+        this.paciente = paciente;
         this.estudios = new ArrayList<>();
-        estudios.add(estudio[i]);
-        this.estado = "Pendiente";
-
+        for (Estudio estudio : estudios) {
+            this.estudios.add(estudio);
+        }
+        this.estado = "Pendiente";  // Corregido para que haya un punto y coma
     }
 
     public boolean estaProcesada(){

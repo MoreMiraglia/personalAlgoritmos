@@ -16,7 +16,7 @@ public class Hospital {
     
     }
 
-    public void registrarProfesional(String nombre, int matricula) {
+    public Profesional registrarProfesional(String nombre, int matricula) {
         boolean existe = false;
         for (Profesional profesional : profesionales){
             if (profesional.getMatricula() == matricula){
@@ -27,11 +27,15 @@ public class Hospital {
         if (existe == false){
             Profesional profesional = new Profesional (nombre, matricula);
             profesionales.add(profesional);
+            return profesional; 
+        }
+        else{
+            return null;
         }
 
     }
 
-    public void registrarPaciente(String nombre, int dni) {
+    public Paciente registrarPaciente(String nombre, int dni) {
         boolean existe = false;
         for (Paciente paciente : pacientes){
             if (paciente.getDni() == dni){
@@ -42,37 +46,22 @@ public class Hospital {
         if (existe == false){
             Paciente paciente = new Paciente (nombre, dni);
             pacientes.add(paciente);
+            return paciente;
+        }
+        else {
+            return null;
         }
 
     }
 
-    public Receta cargarReceta(String nombreProfesional, String nombrePaciente, Estudio[] estudios) {
-        Profesional profesional = null;
-        Paciente paciente = null;
-    
-        // Buscar el profesional por nombre
-        for (Profesional p : profesionales) {
-            if (p.toString().contains(nombreProfesional)) {  // Comprobamos si el nombre está en la representación de texto
-                profesional = p;
-                break;
-            }
-        }
-    
-        // Buscar el paciente por nombre
-        for (Paciente p : pacientes) {
-            if (p.toString().contains(nombrePaciente)) {  // Comprobamos si el nombre está en la representación de texto
-                paciente = p;
-                break;
-            }
-        }
-    
-        // Verificar que tanto el profesional como el paciente existan
-        if (profesional != null && paciente != null) {
+    public Receta cargarReceta(Profesional profesional, Paciente paciente, Estudio[] estudios) {
+        if (profesionales.contains(profesional) && pacientes.contains(paciente)) {
             int idReceta = recetas.size() + 1;
             Receta receta = new Receta(idReceta, profesional, paciente, estudios);
             recetas.add(receta);
             return receta;  
-        } else {
+        } 
+        else {
             System.out.println("La receta no pudo ser cargada. Pruebe registrando al profesional y/o paciente");
             return null; 
         }
